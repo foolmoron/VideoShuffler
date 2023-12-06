@@ -15,7 +15,6 @@ async function loopRandomVids() {
                 await new Promise(res => setTimeout(res, 0.5 * 1000));
             }
         }
-        await new Promise(res => vidMain.addEventListener('loadeddata', res, {once: true}));
         const minDurationSecs = Math.max(60, vidMain.duration);
         await new Promise(res => setTimeout(res, minDurationSecs * 1000));
     }
