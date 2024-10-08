@@ -23,15 +23,13 @@ app.use(
     })
 );
 
-app.get('/vid', async (req, res) => {
-    const vids = await fsp.readdir('./public/' + PUBLIC_VID_PATH);
-    const vid = vids[Math.floor(Math.random() * vids.length)];
-    res.send('./vids/' + vid);
-});
+function isValidVideoPath(path) {
+    return path.endsWith('.mp4') || path.endsWith('.webp')
+}
 
 const interrupts = []
 fs.watch('./public/' + PUBLIC_VID_PATH, (eventType, filename) => {
-    if (!filename.endsWith('.mp4') & !filename.endsWith('.webp')) {
+    if (!isValidVideoPath(filename)) {
         return;
     }
     const publicPath = PUBLIC_VID_PATH + filename;
@@ -40,18 +38,19 @@ fs.watch('./public/' + PUBLIC_VID_PATH, (eventType, filename) => {
     }
 });
 
-app.get('/interrupts', async (req, res) => {
-    res.json(interrupts);
+app.get('/vid', async (req, res) => {
+    const interrupt = interrupts.shift();
+    if (interrupt) {
+        res.send(interrupt);
+    } else {
+        const vids = (await fsp.readdir('./public/' + PUBLIC_VID_PATH)).filter(isValidVideoPath);
+        const vid = vids[Math.floor(Math.random() * vids.length)];
+        res.send('./vids/' + vid);
+    }
 });
 
-app.delete('/interrupts/:filename', async (req, res) => {
-    const index = interrupts.indexOf(req.params.filename);
-    if (index !== -1) {
-        interrupts.splice(index, 1);
-        res.send('OK');
-    } else {
-        res.status(404).send('Not found');
-    }
+app.get('/interrupts', async (req, res) => {
+    res.json(interrupts);
 });
 
 https

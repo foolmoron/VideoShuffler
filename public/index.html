@@ -26,11 +26,40 @@
         video.hide {
             display: none;
         }
+
+        p {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            font-family: monospace;
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 7rem;
+            color: white;
+            -webkit-text-stroke: 0.1rem black;
+            text-transform: uppercase;
+            
+            inset: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+        }
+
+        .spacing {
+            min-width: 10rem;
+            flex-grow: 0.5;
+        }
+        .signature {
+            width: 100%;
+            text-align: right;
+            font-style: italic;
+        }
     </style>
     <script defer src="main.js?v=1"></script>
 </head>
 <body>
-    <video id="vid-main" autoplay loop></video>
-    <video id="vid-interrupt" autoplay loop class="hide"></video>
+    <video id="vid-main" autoplay loop muted></video>
+    <p id="text-container"></p>
 </body>
 </html>
