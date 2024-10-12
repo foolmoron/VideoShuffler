@@ -35,7 +35,7 @@ async function loopRandomVids() {
                     phrase.length = 0;
                 }
             }
-            textContainer.innerHTML = texts.join(`<div class="spacing"></div>`) + `<div class="signature">~${signature}</div>`;
+            textContainer.innerHTML = texts.join(`<div class="spacing"></div>`) + `<div class="signature">~ ${signature}</div>`;
             for (const n of textContainer.childNodes) {
                 n.style.visibility = 'hidden';
             }
