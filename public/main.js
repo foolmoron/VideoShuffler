@@ -2,13 +2,30 @@
 const vidMain = document.querySelector('#vid-main');
 /** @type { HTMLParagraphElement } */
 const textContainer = document.querySelector('#text-container');
+/** @type { HTMLDivElement } */
+const animationContainer = document.querySelector('#animation-container');
 
 let doInterrupt = () => {}; // will be replaced with a promise resolve func
 
+function retriggerAnimation(htmlElement) {
+    htmlElement.style.animation = 'none';
+    htmlElement.offsetHeight;
+    htmlElement.style.animation = null; 
+}
+
 async function loopRandomVids() {
     while (true) {
-        const vidSrc = await fetch('./vid').then(res => res.text());
+        const vidRes = await fetch('./vid').then(res => res.json());
+        const vidSrc = vidRes.path;
         vidMain.src = vidSrc;
+
+        if (vidRes.type) {
+            animationContainer.dataset.type = vidRes.type;
+            const delaySecs = vidRes.type === 'INTERRUPT' ? 3.6 : 1.2;
+            await new Promise(res => setTimeout(res, delaySecs * 1000));
+            delete animationContainer.dataset.type;
+        }
+
         while (true) {
             try {
                 await vidMain.play();
@@ -51,10 +68,7 @@ async function loopRandomVids() {
             })();
         }
 
-        // retrigger animation with reflow trick
-        textContainer.style.animation = 'none';
-        textContainer.offsetHeight;
-        textContainer.style.animation = null; 
+        retriggerAnimation(textContainer);
 
         const interruptPromise = new Promise((res, rej) => {
             doInterrupt = res;
@@ -75,7 +89,7 @@ async function interruptWithNewVids() {
         if (interrupts.length != 0) {
             doInterrupt();
         }
-        await new Promise(res => setTimeout(res, 3 * 1000));
+        await new Promise(res => setTimeout(res, 0.4 * 1000));
     }
 }
 interruptWithNewVids();

@@ -56,11 +56,82 @@
             font-style: italic;
             text-transform: lowercase;
         }
+
+        #animation-container {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: white;
+            color: black;
+
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 7rem;
+            font-family: monospace;
+            font-weight: bold;
+            letter-spacing: 2.4rem;
+        }
+        #animation-container[data-type] {
+            display: flex;
+        }
+
+        #animation-container > div {
+            display: none;
+        }
+        #animation-container > div > *:first-child {
+            margin-top: 2rem;
+        }
+        #animation-container > div > *:last-child {
+            margin-bottom: 2rem;
+        }
+        #animation-container[data-type="INTERRUPT"] > #INTERRUPT {
+            display: contents;
+        }
+        #animation-container[data-type="NEXT"] > #NEXT {
+            display: contents;
+        }
+        #animation-container[data-type="PREV"] > #PREV {
+            display: contents;
+        }
+
+        #animation-container .icon {
+            font-weight: normal;
+            letter-spacing: normal;
+            font-size: 30rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            animation: scale-pulse 0.55s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes scale-pulse {
+            0% { scale: 0.9; }
+            100% { scale: 1.7; }
+        }
     </style>
     <script defer src="main.js?v=1"></script>
 </head>
 <body>
     <video id="vid-main" autoplay loop muted></video>
     <p id="text-container"></p>
+    <div id="animation-container">
+        <div id="INTERRUPT">
+            <div>NEW MEMORY</div>
+            <div class="icon" style="transform-origin: 50% 70%; ">▲</div>
+            <div>MEMORY NEW</div>
+        </div>
+        <div id="NEXT">
+            <div style="visibility: hidden;">.</div>
+            <div class="icon">►►</div>
+            <div>SKIP MEMORY</div>
+        </div>
+        <div id="PREV">
+            <div>MEMORY PREV</div>
+            <div class="icon">◄◄</div>
+            <div style="visibility: hidden;">.</div>
+        </div>
+    </div>
 </body>
 </html>
