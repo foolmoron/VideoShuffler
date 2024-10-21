@@ -73,7 +73,7 @@ async function loopRandomVids() {
         const interruptPromise = new Promise((res, rej) => {
             doInterrupt = res;
         });
-        const minDurationSecs = Math.max(300, vidMain.duration);
+        const minDurationSecs = Math.max(30, vidMain.duration);
         await Promise.race([
             new Promise(res => setTimeout(res, minDurationSecs * 1000)),
             interruptPromise,
