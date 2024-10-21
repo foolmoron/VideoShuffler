@@ -79,6 +79,7 @@ async function loopRandomVids() {
             interruptPromise,
         ]);
         stopAnim = true;
+        textContainer.innerHTML = '';
     }
 }
 loopRandomVids();

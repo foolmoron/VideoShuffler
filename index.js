@@ -46,7 +46,7 @@ fs.watch('./public/' + PUBLIC_VID_PATH, (eventType, filename) => {
         return;
     }
     const publicPath = PUBLIC_VID_PATH + filename;
-    if (eventType === 'change' && !interrupts.includes(publicPath)) {
+    if (eventType === 'change' && !interrupts.find(i => i.path == publicPath)) {
         interrupts.push({
             path: publicPath,
             type: 'INTERRUPT',
