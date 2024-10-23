@@ -41,8 +41,9 @@ async function getRandomVidPath() {
 
 /** @type { {path: string, type?: 'INTERRUPT' | 'NEXT' | 'PREV'}[] } */
 const interrupts = []
+let initializing = true;
 fs.watch('./public/' + PUBLIC_VID_PATH, (eventType, filename) => {
-    if (!isValidVideoPath(filename)) {
+    if (initializing || !isValidVideoPath(filename)) {
         return;
     }
     const publicPath = PUBLIC_VID_PATH + filename;
@@ -53,6 +54,7 @@ fs.watch('./public/' + PUBLIC_VID_PATH, (eventType, filename) => {
         });
     }
 });
+setTimeout(() => initializing = false, 2*1000);
 
 app.get('/vid', async (req, res) => {
     const interrupt = interrupts.shift();
@@ -101,7 +103,7 @@ app.get('/vid-next', async (req, res) => {
         return;
     }
     historyLastRequestMs = Date.now();
-    
+
     if (historyIndex != undefined && historyIndex < (history.length - 1)) {
         historyIndex++;
         interrupts.push({
