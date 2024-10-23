@@ -10,7 +10,7 @@ let doInterrupt = () => {}; // will be replaced with a promise resolve func
 function retriggerAnimation(htmlElement) {
     htmlElement.style.animation = 'none';
     htmlElement.offsetHeight;
-    htmlElement.style.animation = null; 
+    htmlElement.style.animation = null;
 }
 
 async function loopRandomVids() {
@@ -35,13 +35,14 @@ async function loopRandomVids() {
                 await new Promise(res => setTimeout(res, 0.5 * 1000));
             }
         }
-        
+
         const [txt, signature] = await Promise.all([
             fetch(vidSrc + '.txt').then(res => res.ok ? res.text() : null),
             fetch(vidSrc + '.signature.txt').then(res => res.ok ? res.text() : 'Anonymous'),
         ]);
         let stopAnim = false;
         if (txt) {
+            const long = txt.length >= 100;
             const words = txt.split(' ');
             const texts = [];
             const phrase = [];
@@ -52,6 +53,7 @@ async function loopRandomVids() {
                     phrase.length = 0;
                 }
             }
+            textContainer.classList.toggle('long', long);
             textContainer.innerHTML = texts.join(`<div class="spacing"></div>`) + `<div class="signature">~ ${signature}</div>`;
             for (const n of textContainer.childNodes) {
                 n.style.visibility = 'hidden';
@@ -63,7 +65,7 @@ async function loopRandomVids() {
                         return;
                     }
                     n.style.visibility = null;
-                    await new Promise(res => setTimeout(res, (Math.random() * 0.5 + 0.2) * 1000));
+                    await new Promise(res => setTimeout(res, (Math.random() * 0.5 + 0.2) * (long ? 0.5 : 1.0) * 1000));
                 }
             })();
         }

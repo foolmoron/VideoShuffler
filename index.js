@@ -36,7 +36,7 @@ function isValidVideoPath(path) {
 
 async function getRandomVidPath() {
     const vids = (await fsp.readdir('./public/' + PUBLIC_VID_PATH)).filter(isValidVideoPath);
-    return './vids/' + vids[Math.floor(Math.random() * vids.length)]
+    return './vids/' + vids[Math.floor(Math.random() * vids.length)];
 }
 
 /** @type { {path: string, type?: 'INTERRUPT' | 'NEXT' | 'PREV'}[] } */
