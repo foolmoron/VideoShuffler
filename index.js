@@ -27,7 +27,7 @@ const MAX_HISTORY = 30;
 const history = [];
 let historyIndex = undefined;
 
-const HISTORY_COOLDOWN_MS = 1.2*1000;
+const HISTORY_COOLDOWN_MS = 2.0*1000;
 let historyLastRequestMs = 0;
 
 function isValidVideoPath(path) {
