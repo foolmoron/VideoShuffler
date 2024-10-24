@@ -42,7 +42,7 @@ async function loopRandomVids() {
         ]);
         let stopAnim = false;
         if (txt) {
-            const long = txt.length >= 100;
+            const long = txt.length >= 85;
             const words = txt.split(' ');
             const texts = [];
             const phrase = [];
