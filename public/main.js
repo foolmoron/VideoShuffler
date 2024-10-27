@@ -13,8 +13,16 @@ function retriggerAnimation(htmlElement) {
     htmlElement.style.animation = null;
 }
 
+const AUTORELOAD_MILLISECS = 10*60*1000;
+const loadTime = Date.now();
+
 async function loopRandomVids() {
     while (true) {
+        if ((Date.now() - loadTime) > AUTORELOAD_MILLISECS) {
+            location.reload();
+            return;
+        }
+
         const vidRes = await fetch('./vid').then(res => res.json());
         const vidSrc = vidRes.path;
         vidMain.src = vidSrc;
