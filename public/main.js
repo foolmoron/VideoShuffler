@@ -51,7 +51,7 @@ async function loopRandomVids() {
         let stopAnim = false;
         if (txt) {
             textContainer.innerHTML = Array.from(txt).map(c => `<span>${c}</span>`).join('');
-            textContainer.innerHTML += '<div style="display: inline-block; float: right;">' + Array.from(`reported by ${signature}`).map(c => `<span>${c}</span>`).join('') + '</div>';
+            textContainer.innerHTML += '<br><div style="position: absolute; right: 8vw; top: 80vh;">' + Array.from(`reported by ${signature}`).map(c => `<span>${c}</span>`).join('') + '</div>';
             const animPromise = (async () => {
                 await new Promise(res => setTimeout(res, 2.5 * 1000));
                 for (const n of textContainer.querySelectorAll('span')) {
