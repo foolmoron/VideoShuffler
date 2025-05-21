@@ -50,30 +50,16 @@ async function loopRandomVids() {
         ]);
         let stopAnim = false;
         if (txt) {
-            const long = txt.length >= 85;
-            const words = txt.split(' ');
-            const texts = [];
-            const phrase = [];
-            for (let i = 0; i < words.length; i++) {
-                phrase.push(words[i]);
-                if (i == words.length - 1 || phrase.length >= 4 || Math.random() > 0.75) {
-                    texts.push(`<div class="phrase" style="margin-left: ${Math.random() * 5 - 1}rem; margin-right: ${Math.random() * 5 - 1}rem;">${phrase.join(' ')}</div>`);
-                    phrase.length = 0;
-                }
-            }
-            textContainer.classList.toggle('long', long);
-            textContainer.innerHTML = texts.join(`<div class="spacing"></div>`) + `<div class="signature">~ ${signature}</div>`;
-            for (const n of textContainer.childNodes) {
-                n.style.visibility = 'hidden';
-            }
+            textContainer.innerHTML = Array.from(txt).map(c => `<span>${c}</span>`).join('');
+            textContainer.innerHTML += '<div style="display: inline-block; float: right;">' + Array.from(`reported by ${signature}`).map(c => `<span>${c}</span>`).join('') + '</div>';
             const animPromise = (async () => {
                 await new Promise(res => setTimeout(res, 2.5 * 1000));
-                for (const n of textContainer.childNodes) {
+                for (const n of textContainer.querySelectorAll('span')) {
                     if (stopAnim) {
                         return;
                     }
-                    n.style.visibility = null;
-                    await new Promise(res => setTimeout(res, (Math.random() * 0.5 + 0.2) * (long ? 0.5 : 1.0) * 1000));
+                    n.style.opacity = 1;
+                    await new Promise(res => setTimeout(res, (Math.random() * 0.08 + 0.12) * 1000));
                 }
             })();
         }

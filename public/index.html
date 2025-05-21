@@ -5,6 +5,10 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Video Shuffler</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+        rel="stylesheet"
+    />
     <style>
         body {
             position: relative;
@@ -32,23 +36,26 @@
             top: 0;
             left: 0;
             margin: 0;
-            font-family: monospace;
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 7rem;
+            font-family: 'Special Elite', monospace;
+            font-size: 8rem;
+            letter-spacing: 0.5rem;
+            line-height: 11rem;
             color: white;
-            -webkit-text-stroke: 0.1rem black;
             text-transform: uppercase;
+            text-shadow: 0 0 1px black, 0 0 2px black, 0 0 4px black;
 
             inset: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-content: flex-start;
         }
         p.long {
-            font-size: 3.5rem;
+            font-size: 3rem;
             line-height: 3.8rem;
             margin-top: 1.2rem;
+        }
+        p span {
+            opacity: 0;
+        }
+        p > div {
+            font-size: 4rem;
         }
 
         .spacing {
@@ -123,17 +130,17 @@
     <p id="text-container"></p>
     <div id="animation-container">
         <div id="INTERRUPT">
-            <div>NEW MEMORY</div>
+            <div>NEW SIGHTING</div>
             <div class="icon" style="transform-origin: 50% 70%; ">▲</div>
-            <div>MEMORY NEW</div>
+            <div style="font-size: smaller;">CLOSE ENCOUNTER</div>
         </div>
         <div id="NEXT">
             <div style="visibility: hidden;">.</div>
             <div class="icon">►►</div>
-            <div>SKIP MEMORY</div>
+            <div>NEXT SIGHTING</div>
         </div>
         <div id="PREV">
-            <div>MEMORY PREV</div>
+            <div>PREV SIGHTING</div>
             <div class="icon">◄◄</div>
             <div style="visibility: hidden;">.</div>
         </div>
